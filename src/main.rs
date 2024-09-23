@@ -31,10 +31,44 @@ fn main() {
     fruit.push_back("Fig");
     fruit.push_back("Cherry");
 
+    print_fruit_salad(&fruit);
+
+    println!("Insert a fruit in front of the salad: ");
+    // Insert a fruit from a user
+    let mut fruit_input = String::new();
+    std::io::stdin().read_line(&mut fruit_input).unwrap();
+    fruit.push_front(&fruit_input);
+
+    println!("Insert a fruit at the end from the salad: ");
+    // Insert a fruit from a user
+    let mut fruit_input = String::new();
+    std::io::stdin().read_line(&mut fruit_input).unwrap();
+    fruit.push_back(&fruit_input);
+
+    print_fruit_salad(&fruit);
+
+    let fruit_vec: Vec<&str> = fruit.clone().into_iter().collect();
+    println!("A random fruit: {}", fruit_vec.choose(&mut rng).unwrap());
+
+    println!("Shuffling again");
+    let mut fruit: Vec<&str> = fruit.into_iter().collect();
+    fruit.shuffle(&mut rng);
+    
+    // Convert the fruit back to a VecDeque
+    let mut fruit: VecDeque<&str> = fruit.into_iter().collect();
+    print_fruit_salad(&fruit);
+
+    if let Some(popped_fruit) = fruit.pop_back() {
+        println!("popped back fruit: {:?}", popped_fruit);
+    }
+    print_fruit_salad(&fruit);
+}
+
+fn print_fruit_salad(fruit_salad: &VecDeque<&str>) {
     println!("Fruit Salad:");
     // Print the fruit salad
-    for (i, iten) in fruit.iter().enumerate() {
-        if i < fruit.len() -1 {
+    for (i, iten) in fruit_salad.iter().enumerate() {
+        if i < fruit_salad.len() - 1 {
             print!("{}, ", iten);
         } else {
             println!("{}", iten);
